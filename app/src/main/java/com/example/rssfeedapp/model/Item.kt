@@ -1,7 +1,28 @@
 package com.example.rssfeedapp.model
 
-data class Item (
-    var title : String,
-    var description : String,
-//    var image : RSSImage?
-        )
+import org.simpleframework.xml.Element
+import org.simpleframework.xml.Root
+
+@Root(name = "item", strict = false)
+data class Item @JvmOverloads constructor(
+    @field:Element(name = "title")
+    @param:Element(name = "title", required = false) var title: String = "",
+
+    @field:Element(name = "description")
+    @param:Element(name = "description", required = false) var description: String = "",
+
+    @field:Element(name = "link")
+    @param:Element(name = "link", required = false) var link: String = "",
+
+    ) : java.io.Serializable {
+
+    @Override
+    override fun toString(): String {
+        return "\n\nItem{" +
+                "title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", link='" + link + '\'' +
+                '}' + "\n" +
+                "------------------------------------------------------------------------------- \n"
+    }
+}

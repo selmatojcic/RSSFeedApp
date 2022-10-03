@@ -12,7 +12,7 @@ interface RSSFeedApi {
     fun getRSS(): Call<RSS>
 
     companion object {
-        var BASE_URL = "https://feeds.bbci.co.uk/news/world/";
+        var BASE_URL = "https://feeds.bbci.co.uk/news/world/"
 
         fun create(): RSSFeedApi {
 
