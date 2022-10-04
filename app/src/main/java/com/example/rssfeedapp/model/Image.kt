@@ -8,9 +8,10 @@ data class Image @JvmOverloads constructor(
     @field:Element(name = "url")
     @param:Element(name = "url", required = false) var url: String = "",
 
-    @field:Element(name = "title")
-    @param:Element(name = "title", required = false) var title: String = "",
+    ) : java.io.Serializable {
 
-    @field:Element(name = "link")
-    @param:Element(name = "link", required = false) var link: String = "",
-    ) : java.io.Serializable
+    @JvmName("getUrl1")
+    fun getUrl(): String {
+        return url
+    }
+}

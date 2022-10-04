@@ -25,5 +25,20 @@ data class Channel @JvmOverloads constructor(
     override fun toString(): String {
         return "Feed: \n [Items: \n$items]"
     }
+
+    @JvmName("getTitle1")
+    fun getTitle(): String {
+        return title
+    }
+
+    @JvmName("getDescription1")
+    fun getDescription(): String {
+        return description
+    }
+
+    @JvmName("getItems1")
+    fun getItems(): List<Item> {
+        return items
+    }
 }
 

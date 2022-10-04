@@ -18,11 +18,25 @@ data class Item @JvmOverloads constructor(
 
     @Override
     override fun toString(): String {
-        return "\n\nItem{" +
-                "title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", link='" + link + '\'' +
-                '}' + "\n" +
-                "------------------------------------------------------------------------------- \n"
+        return "\n\nItem: " +
+                "title ='" + title + '\'' +
+                ", description ='" + description + '\'' +
+                ", link ='" + link + '\'' +
+                '}' + "\n"
+    }
+
+    @JvmName("getTitle1")
+    fun getTitle(): String {
+        return title
+    }
+
+    @JvmName("getDescription1")
+    fun getDescription(): String {
+        return description
+    }
+
+    @JvmName("getLink1")
+    fun getLink(): String {
+        return link
     }
 }
