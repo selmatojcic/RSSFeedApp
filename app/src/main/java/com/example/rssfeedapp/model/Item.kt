@@ -5,13 +5,13 @@ import org.simpleframework.xml.Root
 
 @Root(name = "item", strict = false)
 data class Item @JvmOverloads constructor(
-    @field:Element(name = "title")
+    @field:Element(name = "title", required = false)
     @param:Element(name = "title", required = false) var title: String = "",
 
-    @field:Element(name = "description")
+    @field:Element(name = "description", required = false)
     @param:Element(name = "description", required = false) var description: String = "",
 
-    @field:Element(name = "link")
+    @field:Element(name = "link", required = false)
     @param:Element(name = "link", required = false) var link: String = "",
 
     ) : java.io.Serializable {
@@ -21,22 +21,7 @@ data class Item @JvmOverloads constructor(
         return "\n\nItem: " +
                 "title ='" + title + '\'' +
                 ", description ='" + description + '\'' +
-                ", link ='" + link + '\'' +
+//                ", link ='" + link + '\'' +
                 '}' + "\n"
-    }
-
-    @JvmName("getTitle1")
-    fun getTitle(): String {
-        return title
-    }
-
-    @JvmName("getDescription1")
-    fun getDescription(): String {
-        return description
-    }
-
-    @JvmName("getLink1")
-    fun getLink(): String {
-        return link
     }
 }
