@@ -6,10 +6,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.rssfeedapp.R
 import com.example.rssfeedapp.model.RSSFeed
 
-class RSSFeedAdapter(feeds : List<RSSFeed>) : RecyclerView.Adapter<RSSFeedViewHolder>() {
-    private val feeds: MutableList<RSSFeed> = mutableListOf()
-    init{
-        refreshData(feeds)
+class RSSFeedAdapter : RecyclerView.Adapter<RSSFeedViewHolder>() {
+    private val rssFeeds: MutableList<RSSFeed> = mutableListOf()
+
+    init {
+        refreshData(rssFeeds)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RSSFeedViewHolder {
@@ -19,15 +20,15 @@ class RSSFeedAdapter(feeds : List<RSSFeed>) : RecyclerView.Adapter<RSSFeedViewHo
     }
 
     override fun onBindViewHolder(holder: RSSFeedViewHolder, position: Int) {
-        val feed = feeds[position]
+        val feed = rssFeeds[position]
         holder.bind(feed)
     }
 
-    override fun getItemCount(): Int = feeds.size
+    override fun getItemCount(): Int = rssFeeds.size
 
-    private fun refreshData(feeds: List<RSSFeed>) {
-        this.feeds.clear()
-        this.feeds.addAll(feeds)
+    fun refreshData(feeds: List<RSSFeed>) {
+        this.rssFeeds.clear()
+        this.rssFeeds.addAll(feeds)
         this.notifyDataSetChanged()
     }
 }

@@ -5,20 +5,20 @@ import android.util.Log
 import android.view.View
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
-import com.example.rssfeedapp.data.RSSFeedDatabaseBuilder
-import com.example.rssfeedapp.data.RSSFeedRepository
+import androidx.lifecycle.ViewModelProvider
 import com.example.rssfeedapp.databinding.ActivityMainBinding
 import com.example.rssfeedapp.model.Image
 import com.example.rssfeedapp.model.RSS
 import com.example.rssfeedapp.model.RSSFeed
+import com.example.rssfeedapp.viewmodel.RSSFeedViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
     private lateinit var mainBinding: ActivityMainBinding
-    private val rssFeedDao = RSSFeedDatabaseBuilder.getInstance().rssFeedDao()
-    private val rssFeedRepository = RSSFeedRepository(rssFeedDao)
+    private lateinit var rssFeedViewModel: RSSFeedViewModel
+
     private lateinit var editText: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity() {
 
         mainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_main)
+        rssFeedViewModel = ViewModelProvider(this)[RSSFeedViewModel::class.java]
 
         editText = findViewById(R.id.addLinkTextInputEditText)
 
@@ -58,6 +59,6 @@ class MainActivity : AppCompatActivity() {
     fun addRSSFeed(title: String, description: String, image: Image) {
         val rssFeed =
             RSSFeed(id = 0, title = title, description = description, imageURL = image.url)
-        rssFeedRepository.insertFeed(rssFeed)
+        rssFeedViewModel.insertRSSFeed(rssFeed)
     }
 }

@@ -1,5 +1,6 @@
 package com.example.rssfeedapp.data
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -8,12 +9,11 @@ import com.example.rssfeedapp.model.RSSFeed
 
 @Dao
 interface RSSFeedDao {
-
     @Query("SELECT * FROM rssFeeds")
-    fun getFeeds() : List<RSSFeed>
+    fun getRSSFeeds(): LiveData<List<RSSFeed>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(rssFeed: RSSFeed)
+    suspend fun insertRSSFeed(rssFeed: RSSFeed)
 
     @Query("DELETE FROM rssFeeds")
     fun deleteAll()

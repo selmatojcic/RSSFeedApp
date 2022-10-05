@@ -8,7 +8,6 @@ import com.example.rssfeedapp.databinding.ItemFeedBinding
 import com.example.rssfeedapp.model.RSSFeed
 
 class RSSFeedViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
     fun bind(rssFeed: RSSFeed) {
         val itemFeedBinding = ItemFeedBinding.bind(itemView)
 

@@ -5,16 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.rssfeedapp.adapters.RSSFeedAdapter
-import com.example.rssfeedapp.data.RSSFeedDatabaseBuilder
-import com.example.rssfeedapp.data.RSSFeedRepository
 import com.example.rssfeedapp.databinding.FragmentRssFeedsBinding
+import com.example.rssfeedapp.viewmodel.RSSFeedViewModel
 
-class RSSFeedsFragment: Fragment()  {
+class RSSFeedsFragment : Fragment() {
     private lateinit var fragmentRssFeedsBinding: FragmentRssFeedsBinding
-    private val rssFeedDao = RSSFeedDatabaseBuilder.getInstance().rssFeedDao()
-    private val rssFeedRepository = RSSFeedRepository(rssFeedDao)
+    private lateinit var rssFeedViewModel: RSSFeedViewModel
+    private val rssFeedAdapter = RSSFeedAdapter()
 
     companion object {
         const val TAG = "RSS FEEDS"
@@ -27,24 +28,37 @@ class RSSFeedsFragment: Fragment()  {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         fragmentRssFeedsBinding = FragmentRssFeedsBinding.inflate(
             inflater,
             container,
             false
         )
-        setupRecyclerView()
+        rssFeedViewModel = ViewModelProvider(this)[RSSFeedViewModel::class.java]
 
         return fragmentRssFeedsBinding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        rssFeedViewModel.getRSSFeeds().observe(
+            viewLifecycleOwner
+        ) { feeds -> rssFeedAdapter.refreshData(feeds) }
+        rssFeedViewModel.getRSSFeeds()
+
+        setupRecyclerView()
+    }
+
     private fun setupRecyclerView() {
-        fragmentRssFeedsBinding.feedsRecyclerView.layoutManager = LinearLayoutManager(
-            context,
-            LinearLayoutManager.VERTICAL,
-            false
-        )
-        fragmentRssFeedsBinding.feedsRecyclerView.adapter =
-            RSSFeedAdapter(RSSFeedRepository(rssFeedDao).getFeeds())
+        fragmentRssFeedsBinding.apply {
+            feedsRecyclerView.layoutManager = LinearLayoutManager(
+                this@RSSFeedsFragment.context,
+                RecyclerView.VERTICAL,
+                false
+            )
+            this@RSSFeedsFragment.rssFeedAdapter.setHasStableIds(true)
+            feedsRecyclerView.adapter = this@RSSFeedsFragment.rssFeedAdapter
+        }
     }
 }
