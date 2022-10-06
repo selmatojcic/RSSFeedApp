@@ -14,14 +14,6 @@ data class Item @JvmOverloads constructor(
     @field:Element(name = "link", required = false)
     @param:Element(name = "link", required = false) var link: String = "",
 
-    ) : java.io.Serializable {
-
-    @Override
-    override fun toString(): String {
-        return "\n\nItem: " +
-                "title ='" + title + '\'' +
-                ", description ='" + description + '\'' +
-//                ", link ='" + link + '\'' +
-                '}' + "\n"
-    }
-}
+    @field:Element(name = "image", required = false)
+    @param:Element(name = "image", required = false) var image: Image = Image(),
+) : java.io.Serializable
