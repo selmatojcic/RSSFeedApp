@@ -67,14 +67,18 @@ class RSSFeedItemsFragment : Fragment() {
         val api = RSSFeedApi.create()
         val call = api.getRSS(url)
 
+        rssFeedItemsFeedsBinding.progressBarItems.visibility = View.VISIBLE
+
         call.enqueue(object : Callback<RSS> {
             override fun onResponse(call: Call<RSS>, response: Response<RSS>) {
                 response.body()?.let { rssFeedViewModel.loadRSSFeedItems(it.channel) }
                 response.body()?.let { setupRecyclerView(it.channel) }
+                rssFeedItemsFeedsBinding.progressBarItems.visibility = View.GONE
             }
 
             override fun onFailure(call: Call<RSS>, t: Throwable) {
                 Log.e("TAG", "Failure" + t.message)
+                rssFeedItemsFeedsBinding.progressBarItems.visibility = View.GONE
             }
         })
     }

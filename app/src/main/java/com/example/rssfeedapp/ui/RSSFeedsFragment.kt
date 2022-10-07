@@ -93,6 +93,8 @@ class RSSFeedsFragment : Fragment() {
             changeLinkProtocol(fragmentRssFeedsBinding.addLinkTextInputEditText.text.toString())
         val call = api.getRSS(rssFeedLink)
 
+        fragmentRssFeedsBinding.progressBar.visibility = View.VISIBLE
+
         call.enqueue(object : Callback<RSS> {
             override fun onResponse(call: Call<RSS>, response: Response<RSS>) {
                 response.body()?.channel?.let {
@@ -104,10 +106,12 @@ class RSSFeedsFragment : Fragment() {
                     )
                 }
                 fragmentRssFeedsBinding.addLinkTextInputEditText.text?.clear()
+                fragmentRssFeedsBinding.progressBar.visibility = View.GONE
             }
 
             override fun onFailure(call: Call<RSS>, t: Throwable) {
                 Log.e("TAG", "Failure" + t.message)
+                fragmentRssFeedsBinding.progressBar.visibility = View.GONE
             }
         })
     }
