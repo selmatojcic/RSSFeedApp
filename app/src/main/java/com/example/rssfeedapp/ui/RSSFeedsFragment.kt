@@ -103,6 +103,7 @@ class RSSFeedsFragment : Fragment() {
                         rssFeedLink
                     )
                 }
+                fragmentRssFeedsBinding.addLinkTextInputEditText.text?.clear()
             }
 
             override fun onFailure(call: Call<RSS>, t: Throwable) {
