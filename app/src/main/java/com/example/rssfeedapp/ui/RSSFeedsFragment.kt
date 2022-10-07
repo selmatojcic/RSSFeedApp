@@ -1,4 +1,4 @@
-package com.example.rssfeedapp
+package com.example.rssfeedapp.ui
 
 import android.content.Context
 import android.os.Bundle
@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.rssfeedapp.listeners.OnRSSFeedClickedListener
+import com.example.rssfeedapp.networking.RSSFeedApi
 import com.example.rssfeedapp.adapters.RSSFeedAdapter
 import com.example.rssfeedapp.databinding.FragmentRssFeedsBinding
 import com.example.rssfeedapp.model.Image

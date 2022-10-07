@@ -1,4 +1,4 @@
-package com.example.rssfeedapp
+package com.example.rssfeedapp.listeners
 
 import com.example.rssfeedapp.model.RSSFeed
 
