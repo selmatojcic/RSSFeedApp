@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,7 +23,7 @@ import retrofit2.Response
 class RSSFeedsFragment : Fragment() {
     private lateinit var fragmentRssFeedsBinding: FragmentRssFeedsBinding
     private lateinit var rssFeedViewModel: RSSFeedViewModel
-    private lateinit var onRSSFeedSelectedListener: OnRSSFeedSelectedListener
+    private lateinit var onRSSFeedClickedListener: OnRSSFeedClickedListener
     private lateinit var rssFeedAdapter: RSSFeedAdapter
 
     companion object {
@@ -46,7 +45,7 @@ class RSSFeedsFragment : Fragment() {
         )
         rssFeedViewModel = ViewModelProvider(this)[RSSFeedViewModel::class.java]
 
-        rssFeedAdapter = RSSFeedAdapter(onRSSFeedSelectedListener)
+        rssFeedAdapter = RSSFeedAdapter(onRSSFeedClickedListener)
 
         fragmentRssFeedsBinding.addLinkButton.setOnClickListener {
             requestCall(fragmentRssFeedsBinding.addLinkButton)
@@ -69,8 +68,8 @@ class RSSFeedsFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if(context is OnRSSFeedSelectedListener){
-            onRSSFeedSelectedListener = context
+        if(context is OnRSSFeedClickedListener){
+            onRSSFeedClickedListener = context
         }
     }
 
@@ -86,7 +85,7 @@ class RSSFeedsFragment : Fragment() {
         }
     }
 
-    fun requestCall(view: View) {
+    private fun requestCall(view: View) {
         val api = RSSFeedApi.create()
         val rssFeedLink = fragmentRssFeedsBinding.addLinkTextInputEditText.text.toString()
         val call = api.getRSS(rssFeedLink)

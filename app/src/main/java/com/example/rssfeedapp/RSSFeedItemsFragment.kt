@@ -1,5 +1,6 @@
 package com.example.rssfeedapp
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -21,8 +22,10 @@ import retrofit2.Response
 class RSSFeedItemsFragment : Fragment() {
     private lateinit var rssFeedItemsFeedsBinding: FragmentRssFeedItemsBinding
     private lateinit var rssFeedViewModel: RSSFeedViewModel
+    private lateinit var rssFeedItemClickedListener: OnRSSFeedItemClickedListener
+    private lateinit var rssFeedItemAdapter: RSSFeedItemAdapter
 
-    companion object{
+    companion object {
         const val TAG = "RSSFeedItemsFragment"
         private const val KEY = "RSSFeedItem"
 
@@ -39,7 +42,7 @@ class RSSFeedItemsFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         rssFeedItemsFeedsBinding = FragmentRssFeedItemsBinding.inflate(
             inflater,
             container,
@@ -47,6 +50,8 @@ class RSSFeedItemsFragment : Fragment() {
         )
 
         rssFeedViewModel = ViewModelProvider(this)[RSSFeedViewModel::class.java]
+
+        rssFeedItemAdapter = RSSFeedItemAdapter(emptyList(), rssFeedItemClickedListener)
 
         arguments?.let {
             val rssFeed = it.getSerializable(KEY) as RSSFeed
@@ -79,7 +84,16 @@ class RSSFeedItemsFragment : Fragment() {
             false
         )
         rssFeedItemsFeedsBinding.itemsRecyclerView.adapter =
-            RSSFeedItemAdapter(rssFeedViewModel.loadRSSFeedItems(channel))
+            RSSFeedItemAdapter(
+                rssFeedViewModel.loadRSSFeedItems(channel),
+                rssFeedItemClickedListener
+            )
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is OnRSSFeedItemClickedListener) {
+            rssFeedItemClickedListener = context
+        }
+    }
 }
