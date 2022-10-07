@@ -2,16 +2,24 @@ package com.example.rssfeedapp
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rssfeedapp.adapters.RSSFeedAdapter
 import com.example.rssfeedapp.databinding.FragmentRssFeedsBinding
+import com.example.rssfeedapp.model.Image
+import com.example.rssfeedapp.model.RSS
+import com.example.rssfeedapp.model.RSSFeed
 import com.example.rssfeedapp.viewmodel.RSSFeedViewModel
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class RSSFeedsFragment : Fragment() {
     private lateinit var fragmentRssFeedsBinding: FragmentRssFeedsBinding
@@ -39,6 +47,10 @@ class RSSFeedsFragment : Fragment() {
         rssFeedViewModel = ViewModelProvider(this)[RSSFeedViewModel::class.java]
 
         rssFeedAdapter = RSSFeedAdapter(onRSSFeedSelectedListener)
+
+        fragmentRssFeedsBinding.addLinkButton.setOnClickListener {
+            requestCall(fragmentRssFeedsBinding.addLinkButton)
+        }
 
         setupRecyclerView()
 
@@ -73,4 +85,33 @@ class RSSFeedsFragment : Fragment() {
             feedsRecyclerView.adapter = this@RSSFeedsFragment.rssFeedAdapter
         }
     }
+
+    fun requestCall(view: View) {
+        val api = RSSFeedApi.create()
+        val rssFeedLink = fragmentRssFeedsBinding.addLinkTextInputEditText.text.toString()
+        val call = api.getRSS(rssFeedLink)
+
+        call.enqueue(object : Callback<RSS> {
+            override fun onResponse(call: Call<RSS>, response: Response<RSS>) {
+                response.body()?.channel?.let {
+                    addRSSFeed(
+                        it.title,
+                        it.description,
+                        it.image,
+                        rssFeedLink
+                    )
+                }
+            }
+
+            override fun onFailure(call: Call<RSS>, t: Throwable) {
+                Log.e("TAG", "Failure" + t.message)
+            }
+        })
+    }
+
+    fun addRSSFeed(title: String, description: String, image: Image, rssFeedURL: String) {
+        val rssFeed = RSSFeed(0, title, description, image.url, rssFeedURL)
+        rssFeedViewModel.insertRSSFeed(rssFeed)
+    }
+
 }

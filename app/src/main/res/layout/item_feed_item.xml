@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="350dp"
-    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_marginHorizontal="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
     android:layout_marginVertical="4dp"
+    android:background="@drawable/item_background"
     android:paddingStart="8dp"
-    android:paddingEnd="16dp"
-    android:background="@drawable/item_background">
+    android:paddingEnd="16dp">
 
     <ImageView
         android:id="@+id/itemImageView"
@@ -16,40 +16,41 @@
         android:layout_height="50dp"
         android:layout_margin="12dp"
         android:scaleType="fitCenter"
+        android:src="@mipmap/ic_launcher"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:src="@mipmap/ic_launcher"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/itemTitleTextView"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
         android:textColor="@color/white"
         android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@id/itemImageView"
         app:layout_constraintTop_toTopOf="parent"
-        android:paddingStart="24dp"
-        android:paddingEnd="24dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        tools:text="Title"
-        android:maxLines="1"
-        android:ellipsize="end" />
+        tools:text="Title" />
 
     <TextView
         android:id="@+id/itemDescriptionTextView"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:paddingBottom="16dp"
         android:textColor="@color/white"
         android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@id/itemImageView"
         app:layout_constraintTop_toBottomOf="@id/itemTitleTextView"
-        android:paddingStart="24dp"
-        android:paddingEnd="24dp"
-        android:paddingBottom="16dp"
-        tools:text="Description description description"
-        android:maxLines="1"
-        android:ellipsize="end" />
+        tools:text="Description description description" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
