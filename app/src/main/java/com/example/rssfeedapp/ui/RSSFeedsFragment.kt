@@ -10,13 +10,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.rssfeedapp.listeners.OnRSSFeedClickedListener
-import com.example.rssfeedapp.networking.RSSFeedApi
 import com.example.rssfeedapp.adapters.RSSFeedAdapter
 import com.example.rssfeedapp.databinding.FragmentRssFeedsBinding
+import com.example.rssfeedapp.listeners.OnRSSFeedClickedListener
 import com.example.rssfeedapp.model.Image
 import com.example.rssfeedapp.model.RSS
 import com.example.rssfeedapp.model.RSSFeed
+import com.example.rssfeedapp.networking.RSSFeedApi
 import com.example.rssfeedapp.viewmodel.RSSFeedViewModel
 import retrofit2.Call
 import retrofit2.Callback
@@ -70,7 +70,7 @@ class RSSFeedsFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if(context is OnRSSFeedClickedListener){
+        if (context is OnRSSFeedClickedListener) {
             onRSSFeedClickedListener = context
         }
     }
@@ -78,18 +78,19 @@ class RSSFeedsFragment : Fragment() {
     private fun setupRecyclerView() {
         fragmentRssFeedsBinding.apply {
             feedsRecyclerView.layoutManager = LinearLayoutManager(
-                this@RSSFeedsFragment.context,
+                context,
                 RecyclerView.VERTICAL,
                 false
             )
-            this@RSSFeedsFragment.rssFeedAdapter.setHasStableIds(true)
-            feedsRecyclerView.adapter = this@RSSFeedsFragment.rssFeedAdapter
+            rssFeedAdapter.setHasStableIds(true)
+            feedsRecyclerView.adapter = rssFeedAdapter
         }
     }
 
     private fun requestCall(view: View) {
         val api = RSSFeedApi.create()
-        val rssFeedLink = fragmentRssFeedsBinding.addLinkTextInputEditText.text.toString()
+        val rssFeedLink =
+            changeLinkProtocol(fragmentRssFeedsBinding.addLinkTextInputEditText.text.toString())
         val call = api.getRSS(rssFeedLink)
 
         call.enqueue(object : Callback<RSS> {
@@ -113,6 +114,17 @@ class RSSFeedsFragment : Fragment() {
     fun addRSSFeed(title: String, description: String, image: Image, rssFeedURL: String) {
         val rssFeed = RSSFeed(0, title, description, image.url, rssFeedURL)
         rssFeedViewModel.insertRSSFeed(rssFeed)
+    }
+
+    private fun changeLinkProtocol(link: String): String {
+        val oldPrefix = "http://"
+        val newPrefix = "https://"
+        var newLink = ""
+        if (link.startsWith(oldPrefix)) {
+            newLink = link.replace(oldPrefix, newPrefix)
+            return newLink
+        }
+        return link
     }
 
 }
