@@ -1,5 +1,6 @@
 package com.example.rssfeedapp
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +16,8 @@ import com.example.rssfeedapp.viewmodel.RSSFeedViewModel
 class RSSFeedsFragment : Fragment() {
     private lateinit var fragmentRssFeedsBinding: FragmentRssFeedsBinding
     private lateinit var rssFeedViewModel: RSSFeedViewModel
-    private val rssFeedAdapter = RSSFeedAdapter()
+    private lateinit var onRSSFeedSelectedListener: OnRSSFeedSelectedListener
+    private lateinit var rssFeedAdapter: RSSFeedAdapter
 
     companion object {
         const val TAG = "RSS FEEDS"
@@ -36,6 +38,10 @@ class RSSFeedsFragment : Fragment() {
         )
         rssFeedViewModel = ViewModelProvider(this)[RSSFeedViewModel::class.java]
 
+        rssFeedAdapter = RSSFeedAdapter(onRSSFeedSelectedListener)
+
+        setupRecyclerView()
+
         return fragmentRssFeedsBinding.root
     }
 
@@ -45,9 +51,15 @@ class RSSFeedsFragment : Fragment() {
         rssFeedViewModel.getRSSFeeds().observe(
             viewLifecycleOwner
         ) { feeds -> rssFeedAdapter.refreshData(feeds) }
-        rssFeedViewModel.getRSSFeeds()
 
-        setupRecyclerView()
+        rssFeedViewModel.getRSSFeeds()
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if(context is OnRSSFeedSelectedListener){
+            onRSSFeedSelectedListener = context
+        }
     }
 
     private fun setupRecyclerView() {

@@ -15,7 +15,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), OnRSSFeedSelectedListener {
     private lateinit var mainBinding: ActivityMainBinding
     private lateinit var rssFeedViewModel: RSSFeedViewModel
 
@@ -47,7 +47,14 @@ class MainActivity : AppCompatActivity() {
 
         call.enqueue(object : Callback<RSS> {
             override fun onResponse(call: Call<RSS>, response: Response<RSS>) {
-                response.body()?.channel?.let { addRSSFeed(it.title, it.description, it.image) }
+                response.body()?.channel?.let {
+                    addRSSFeed(
+                        it.title,
+                        it.description,
+                        it.image,
+                        editText.text.toString()
+                    )
+                }
             }
 
             override fun onFailure(call: Call<RSS>, t: Throwable) {
@@ -56,9 +63,17 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    fun addRSSFeed(title: String, description: String, image: Image) {
-        val rssFeed =
-            RSSFeed(id = 0, title = title, description = description, imageURL = image.url)
+    fun addRSSFeed(title: String, description: String, image: Image, rssFeedURL: String) {
+        val rssFeed = RSSFeed(0, title, description, image.url, rssFeedURL)
         rssFeedViewModel.insertRSSFeed(rssFeed)
+    }
+
+    override fun onRSSFeedSelected(rssFeed: RSSFeed) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainer,
+                RSSFeedItemsFragment.create(rssFeed),
+                RSSFeedItemsFragment.TAG)
+            .addToBackStack(null)
+            .commit()
     }
 }

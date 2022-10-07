@@ -3,10 +3,14 @@ package com.example.rssfeedapp.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.rssfeedapp.OnRSSFeedSelectedListener
 import com.example.rssfeedapp.R
 import com.example.rssfeedapp.model.RSSFeed
 
-class RSSFeedAdapter : RecyclerView.Adapter<RSSFeedViewHolder>() {
+class RSSFeedAdapter(
+    private val onRSSFeedSelectedListener: OnRSSFeedSelectedListener
+) : RecyclerView.Adapter<RSSFeedViewHolder>() {
+
     private val rssFeeds: MutableList<RSSFeed> = mutableListOf()
 
     init {
@@ -20,8 +24,12 @@ class RSSFeedAdapter : RecyclerView.Adapter<RSSFeedViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: RSSFeedViewHolder, position: Int) {
-        val feed = rssFeeds[position]
-        holder.bind(feed)
+        val rssFeed = rssFeeds[position]
+        holder.bind(rssFeed)
+
+        holder.itemView.setOnClickListener {
+            onRSSFeedSelectedListener.onRSSFeedSelected(rssFeed)
+        }
     }
 
     override fun getItemCount(): Int = rssFeeds.size

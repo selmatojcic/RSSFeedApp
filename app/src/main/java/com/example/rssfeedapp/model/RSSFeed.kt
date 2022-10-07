@@ -9,5 +9,6 @@ data class RSSFeed(
     @PrimaryKey(autoGenerate = true) val id: Long,
     @ColumnInfo(name = "title") var title: String,
     @ColumnInfo(name = "description") var description: String,
-    @ColumnInfo(name = "imageURL") var imageURL: String
+    @ColumnInfo(name = "imageURL") var imageURL: String,
+    @ColumnInfo(name = "rssFeedURL") var rssFeedURL: String
 ) : java.io.Serializable
