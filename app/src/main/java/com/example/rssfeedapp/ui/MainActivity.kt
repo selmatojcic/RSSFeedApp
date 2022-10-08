@@ -4,13 +4,12 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.rssfeedapp.*
+import com.example.rssfeedapp.R
 import com.example.rssfeedapp.databinding.ActivityMainBinding
 import com.example.rssfeedapp.listeners.OnRSSFeedClickedListener
 import com.example.rssfeedapp.listeners.OnRSSFeedItemClickedListener
 import com.example.rssfeedapp.model.Item
 import com.example.rssfeedapp.model.RSSFeed
-
 
 class MainActivity : AppCompatActivity(), OnRSSFeedClickedListener, OnRSSFeedItemClickedListener {
     private lateinit var mainBinding: ActivityMainBinding

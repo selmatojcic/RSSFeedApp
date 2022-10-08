@@ -1,6 +1,5 @@
 package com.example.rssfeedapp.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.example.rssfeedapp.data.RSSFeedDatabaseBuilder
@@ -29,12 +28,22 @@ class RSSFeedViewModel : ViewModel() {
         return rssFeedRepository.deleteAllRSSFeeds()
     }
 
-    fun loadRSSFeedItems(channel: Channel) : List<Item>{
+    fun loadRSSFeedItems(channel: Channel): List<Item> {
         val itemList: MutableList<Item> = mutableListOf()
         for (item in channel.items) {
             itemList.add(item)
         }
-        Log.e("AAAA", itemList.toString())
         return itemList
+    }
+
+    fun changeLinkProtocol(link: String): String {
+        val oldPrefix = "http://"
+        val newPrefix = "https://"
+        var newLink = ""
+        if (link.startsWith(oldPrefix)) {
+            newLink = link.replace(oldPrefix, newPrefix)
+            return newLink
+        }
+        return link
     }
 }

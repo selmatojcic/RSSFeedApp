@@ -19,10 +19,5 @@ data class Channel @JvmOverloads constructor(
     @param:ElementList(
         name = "item", inline = true, required = false
     ) var items: List<Item> = emptyList()
-) : java.io.Serializable {
-
-    override fun toString(): String {
-        return "Feed: \n [Items: \n$items]"
-    }
-}
+) : java.io.Serializable
 

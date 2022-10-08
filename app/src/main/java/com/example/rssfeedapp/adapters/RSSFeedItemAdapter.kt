@@ -3,8 +3,8 @@ package com.example.rssfeedapp.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.rssfeedapp.listeners.OnRSSFeedItemClickedListener
 import com.example.rssfeedapp.R
+import com.example.rssfeedapp.listeners.OnRSSFeedItemClickedListener
 import com.example.rssfeedapp.model.Item
 
 class RSSFeedItemAdapter(

@@ -16,7 +16,7 @@ class RSSFeedViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         Glide.with(itemView)
             .load(rssFeed.imageURL)
-            .placeholder(R.drawable.item_background)
+            .placeholder(R.drawable.ic_launcher_foreground)
             .override(600, 600)
             .fitCenter()
             .into(itemFeedBinding.feedItemImageView)

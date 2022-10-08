@@ -45,7 +45,7 @@ class RSSFeedAdapter(
                 .setPositiveButton("Yes") { dialog, _ ->
                     rssFeeds.removeAt(position)
                     rssFeedViewModel.deleteRSSFeed(rssFeed)
-                    notifyDataSetChanged()
+                    notifyItemRemoved(position)
                     Toast.makeText(context, "Deleted " + rssFeed.title, Toast.LENGTH_SHORT)
                         .show()
                     dialog.dismiss()

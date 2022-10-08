@@ -9,13 +9,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.rssfeedapp.listeners.OnRSSFeedItemClickedListener
-import com.example.rssfeedapp.networking.RSSFeedApi
 import com.example.rssfeedapp.adapters.RSSFeedItemAdapter
 import com.example.rssfeedapp.databinding.FragmentRssFeedItemsBinding
+import com.example.rssfeedapp.listeners.OnRSSFeedItemClickedListener
 import com.example.rssfeedapp.model.Channel
 import com.example.rssfeedapp.model.RSS
 import com.example.rssfeedapp.model.RSSFeed
+import com.example.rssfeedapp.networking.RSSFeedApi
 import com.example.rssfeedapp.viewmodel.RSSFeedViewModel
 import retrofit2.Call
 import retrofit2.Callback

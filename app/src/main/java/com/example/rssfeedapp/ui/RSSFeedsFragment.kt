@@ -47,7 +47,8 @@ class RSSFeedsFragment : Fragment() {
         )
         rssFeedViewModel = ViewModelProvider(this)[RSSFeedViewModel::class.java]
 
-        rssFeedAdapter = context?.let { RSSFeedAdapter(onRSSFeedClickedListener, it, rssFeedViewModel) }!!
+        rssFeedAdapter =
+            context?.let { RSSFeedAdapter(onRSSFeedClickedListener, it, rssFeedViewModel) }!!
 
         fragmentRssFeedsBinding.addLinkButton.setOnClickListener {
             requestCall(fragmentRssFeedsBinding.addLinkButton)
@@ -90,7 +91,9 @@ class RSSFeedsFragment : Fragment() {
     private fun requestCall(view: View) {
         val api = RSSFeedApi.create()
         val rssFeedLink =
-            changeLinkProtocol(fragmentRssFeedsBinding.addLinkTextInputEditText.text.toString())
+            rssFeedViewModel.changeLinkProtocol(
+                fragmentRssFeedsBinding.addLinkTextInputEditText.text.toString()
+            )
         val call = api.getRSS(rssFeedLink)
 
         fragmentRssFeedsBinding.progressBar.visibility = View.VISIBLE
@@ -111,6 +114,7 @@ class RSSFeedsFragment : Fragment() {
 
             override fun onFailure(call: Call<RSS>, t: Throwable) {
                 Log.e("TAG", "Failure" + t.message)
+                fragmentRssFeedsBinding.addLinkTextInputEditText.text?.clear()
                 fragmentRssFeedsBinding.progressBar.visibility = View.GONE
             }
         })
@@ -121,15 +125,5 @@ class RSSFeedsFragment : Fragment() {
         rssFeedViewModel.insertRSSFeed(rssFeed)
     }
 
-    private fun changeLinkProtocol(link: String): String {
-        val oldPrefix = "http://"
-        val newPrefix = "https://"
-        var newLink = ""
-        if (link.startsWith(oldPrefix)) {
-            newLink = link.replace(oldPrefix, newPrefix)
-            return newLink
-        }
-        return link
-    }
 
 }
