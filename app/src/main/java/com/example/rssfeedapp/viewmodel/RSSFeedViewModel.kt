@@ -1,14 +1,15 @@
 package com.example.rssfeedapp.viewmodel
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
 import com.example.rssfeedapp.data.RSSFeedDatabaseBuilder
 import com.example.rssfeedapp.data.RSSFeedRepository
 import com.example.rssfeedapp.model.Channel
 import com.example.rssfeedapp.model.Item
 import com.example.rssfeedapp.model.RSSFeed
 
-class RSSFeedViewModel : ViewModel() {
+class RSSFeedViewModel(androidApplication: Application) : AndroidViewModel(androidApplication) {
     private val rssFeedDao = RSSFeedDatabaseBuilder.getInstance().rssFeedDao()
     private val rssFeedRepository = RSSFeedRepository(rssFeedDao)
 

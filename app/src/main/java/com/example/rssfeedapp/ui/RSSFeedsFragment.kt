@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rssfeedapp.adapters.RSSFeedAdapter
@@ -18,13 +17,14 @@ import com.example.rssfeedapp.model.RSS
 import com.example.rssfeedapp.model.RSSFeed
 import com.example.rssfeedapp.networking.RSSFeedApi
 import com.example.rssfeedapp.viewmodel.RSSFeedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class RSSFeedsFragment : Fragment() {
     private lateinit var fragmentRssFeedsBinding: FragmentRssFeedsBinding
-    private lateinit var rssFeedViewModel: RSSFeedViewModel
+    private val rssFeedViewModel by viewModel<RSSFeedViewModel>()
     private lateinit var onRSSFeedClickedListener: OnRSSFeedClickedListener
     private lateinit var rssFeedAdapter: RSSFeedAdapter
 
@@ -45,7 +45,6 @@ class RSSFeedsFragment : Fragment() {
             container,
             false
         )
-        rssFeedViewModel = ViewModelProvider(this)[RSSFeedViewModel::class.java]
 
         rssFeedAdapter =
             context?.let { RSSFeedAdapter(onRSSFeedClickedListener, it, rssFeedViewModel) }!!
