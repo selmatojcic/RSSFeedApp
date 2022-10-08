@@ -21,7 +21,7 @@
 
     <TextView
         android:id="@+id/feedTitleTextView"
-        android:layout_width="300dp"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
@@ -50,5 +50,18 @@
         app:layout_constraintStart_toEndOf="@id/feedItemImageView"
         app:layout_constraintTop_toBottomOf="@id/feedTitleTextView"
         tools:text="Description description description" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/deleteButton"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:background="@android:color/transparent"
+        app:icon="@android:drawable/ic_delete"
+        app:iconGravity="textStart"
+        app:iconSize="20dp"
+        app:layout_constraintStart_toEndOf="@id/feedTitleTextView"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

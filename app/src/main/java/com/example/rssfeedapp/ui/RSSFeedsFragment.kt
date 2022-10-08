@@ -47,7 +47,7 @@ class RSSFeedsFragment : Fragment() {
         )
         rssFeedViewModel = ViewModelProvider(this)[RSSFeedViewModel::class.java]
 
-        rssFeedAdapter = RSSFeedAdapter(onRSSFeedClickedListener)
+        rssFeedAdapter = context?.let { RSSFeedAdapter(onRSSFeedClickedListener, it, rssFeedViewModel) }!!
 
         fragmentRssFeedsBinding.addLinkButton.setOnClickListener {
             requestCall(fragmentRssFeedsBinding.addLinkButton)

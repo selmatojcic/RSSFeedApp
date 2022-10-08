@@ -1,10 +1,7 @@
 package com.example.rssfeedapp.data
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.example.rssfeedapp.model.RSSFeed
 
 @Dao
@@ -17,4 +14,7 @@ interface RSSFeedDao {
 
     @Query("DELETE FROM rssFeeds")
     fun deleteAll()
+
+    @Delete
+    fun deleteRSSFeed(rssFeed: RSSFeed)
 }

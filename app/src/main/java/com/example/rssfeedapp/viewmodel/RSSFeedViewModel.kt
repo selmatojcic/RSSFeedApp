@@ -17,6 +17,10 @@ class RSSFeedViewModel : ViewModel() {
         rssFeedRepository.insertRSSFeed(rssFeed)
     }
 
+    fun deleteRSSFeed(rssFeed: RSSFeed) {
+        rssFeedRepository.deleteRSSFeed(rssFeed)
+    }
+
     fun getRSSFeeds(): LiveData<List<RSSFeed>> {
         return rssFeedRepository.getRSSFeeds()
     }

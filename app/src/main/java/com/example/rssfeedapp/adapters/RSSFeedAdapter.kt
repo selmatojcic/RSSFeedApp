@@ -1,14 +1,21 @@
 package com.example.rssfeedapp.adapters
 
+import android.app.AlertDialog
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.example.rssfeedapp.listeners.OnRSSFeedClickedListener
 import com.example.rssfeedapp.R
+import com.example.rssfeedapp.listeners.OnRSSFeedClickedListener
 import com.example.rssfeedapp.model.RSSFeed
+import com.example.rssfeedapp.viewmodel.RSSFeedViewModel
+import kotlinx.android.synthetic.main.item_feed.view.*
 
 class RSSFeedAdapter(
-    private val onRSSFeedClickedListener: OnRSSFeedClickedListener
+    private val onRSSFeedClickedListener: OnRSSFeedClickedListener,
+    private val context: Context,
+    private val rssFeedViewModel: RSSFeedViewModel
 ) : RecyclerView.Adapter<RSSFeedViewHolder>() {
 
     private val rssFeeds: MutableList<RSSFeed> = mutableListOf()
@@ -30,6 +37,26 @@ class RSSFeedAdapter(
         holder.itemView.setOnClickListener {
             onRSSFeedClickedListener.onRSSFeedClicked(rssFeed)
         }
+
+        holder.itemView.deleteButton.setOnClickListener {
+            AlertDialog.Builder(context)
+                .setTitle("Delete")
+                .setMessage("Are you sure you want to delete " + rssFeed.title + "?")
+                .setPositiveButton("Yes") { dialog, _ ->
+                    rssFeeds.removeAt(position)
+                    rssFeedViewModel.deleteRSSFeed(rssFeed)
+                    notifyDataSetChanged()
+                    Toast.makeText(context, "Deleted " + rssFeed.title, Toast.LENGTH_SHORT)
+                        .show()
+                    dialog.dismiss()
+                }
+                .setNegativeButton("No") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .create()
+                .show()
+        }
+
     }
 
     override fun getItemCount(): Int = rssFeeds.size
