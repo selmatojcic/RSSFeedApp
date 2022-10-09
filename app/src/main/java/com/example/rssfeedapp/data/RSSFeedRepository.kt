@@ -18,7 +18,9 @@ class RSSFeedRepository(private val rssFeedDao: RSSFeedDao) {
     }
 
     fun deleteRSSFeed(rssFeed: RSSFeed) {
-        rssFeedDao.deleteRSSFeed(rssFeed)
+        CoroutineScope(IO).launch {
+            rssFeedDao.deleteRSSFeed(rssFeed)
+        }
     }
 
     fun deleteAllRSSFeeds() = rssFeedDao.deleteAll()

@@ -16,5 +16,5 @@ interface RSSFeedDao {
     fun deleteAll()
 
     @Delete
-    fun deleteRSSFeed(rssFeed: RSSFeed)
+    suspend fun deleteRSSFeed(rssFeed: RSSFeed)
 }
