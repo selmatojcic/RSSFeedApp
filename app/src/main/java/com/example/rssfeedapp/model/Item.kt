@@ -16,4 +16,4 @@ data class Item @JvmOverloads constructor(
 
     @field:Element(name = "image", required = false)
     @param:Element(name = "image", required = false) var image: Image = Image(),
-) : java.io.Serializable
+)

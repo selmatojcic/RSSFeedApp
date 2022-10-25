@@ -7,4 +7,4 @@ import org.simpleframework.xml.Root
 data class RSS @JvmOverloads constructor(
     @field:Element(name = "channel", required = false)
     @param:Element(name = "channel", required = false) var channel: Channel = Channel()
-) : java.io.Serializable
+)

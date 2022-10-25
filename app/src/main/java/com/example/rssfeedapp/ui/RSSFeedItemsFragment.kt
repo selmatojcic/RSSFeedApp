@@ -69,7 +69,6 @@ class RSSFeedItemsFragment : Fragment() {
 
         call.enqueue(object : Callback<RSS> {
             override fun onResponse(call: Call<RSS>, response: Response<RSS>) {
-                response.body()?.let { rssFeedViewModel.loadRSSFeedItems(it.channel) }
                 response.body()?.let { setupRecyclerView(it.channel) }
                 rssFeedItemsFeedsBinding.progressBarItems.visibility = View.GONE
             }
