@@ -8,7 +8,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 
-class RSSFeedRepository(private val rssFeedDao: RSSFeedDao) {
+class RSSFeedRepository {
+    private val rssFeedDao = RSSFeedDatabaseBuilder.getInstance().rssFeedDao()
+
     fun getRSSFeeds(): LiveData<List<RSSFeed>> {
         return rssFeedDao.getRSSFeeds()
     }

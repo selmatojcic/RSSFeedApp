@@ -9,5 +9,5 @@ import org.koin.dsl.module
 val viewModelModule = module {
     viewModel { RSSFeedViewModel(androidApplication()) }
 
-    single { RSSFeedRepository(get()) }
+    single { RSSFeedRepository() }
 }

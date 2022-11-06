@@ -44,6 +44,7 @@ class RSSFeedsFragment : Fragment() {
         fragmentRssFeedsBinding.addLinkButton.setOnClickListener {
             rssFeedViewModel
                 .loadRSSFeeds(fragmentRssFeedsBinding.addLinkTextInputEditText.text.toString())
+            fragmentRssFeedsBinding.addLinkTextInputEditText.text?.clear()
         }
 
         setupRecyclerView()

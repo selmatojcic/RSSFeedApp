@@ -4,15 +4,13 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
-import com.example.rssfeedapp.data.RSSFeedDatabaseBuilder
 import com.example.rssfeedapp.data.RSSFeedRepository
 import com.example.rssfeedapp.model.Item
 import com.example.rssfeedapp.model.RSSFeed
 import kotlinx.coroutines.launch
 
 class RSSFeedViewModel(androidApplication: Application) : AndroidViewModel(androidApplication) {
-    private val rssFeedDao = RSSFeedDatabaseBuilder.getInstance().rssFeedDao()
-    private val rssFeedRepository = RSSFeedRepository(rssFeedDao)
+    private val rssFeedRepository = RSSFeedRepository()
 
     fun deleteRSSFeed(rssFeed: RSSFeed) {
         rssFeedRepository.deleteRSSFeed(rssFeed)
@@ -23,9 +21,6 @@ class RSSFeedViewModel(androidApplication: Application) : AndroidViewModel(andro
     }
 
     fun loadRSSFeeds(url: String) {
-//        fragmentRssFeedsBinding.progressBar.visibility = View.VISIBLE
-//        fragmentRssFeedsBinding.addLinkTextInputEditText.text?.clear()
-//        fragmentRssFeedsBinding.progressBar.visibility = View.GONE
         viewModelScope.launch {
             rssFeedRepository.loadRSSFeeds(url)
         }
