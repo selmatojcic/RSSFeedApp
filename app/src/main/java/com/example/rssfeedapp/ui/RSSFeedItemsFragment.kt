@@ -2,24 +2,19 @@ package com.example.rssfeedapp.ui
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rssfeedapp.adapters.RSSFeedItemAdapter
 import com.example.rssfeedapp.databinding.FragmentRssFeedItemsBinding
 import com.example.rssfeedapp.listeners.OnRSSFeedItemClickedListener
-import com.example.rssfeedapp.model.Channel
-import com.example.rssfeedapp.model.RSS
 import com.example.rssfeedapp.model.RSSFeed
-import com.example.rssfeedapp.networking.RSSFeedApi
 import com.example.rssfeedapp.viewmodel.RSSFeedViewModel
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class RSSFeedItemsFragment : Fragment() {
     private lateinit var rssFeedItemsFeedsBinding: FragmentRssFeedItemsBinding
@@ -53,34 +48,18 @@ class RSSFeedItemsFragment : Fragment() {
 
         rssFeedItemAdapter = RSSFeedItemAdapter(emptyList(), rssFeedItemClickedListener)
 
-        arguments?.let {
-            val rssFeed = it.getSerializable(KEY) as RSSFeed
-            requestCall(rssFeed.rssFeedURL)
+        viewLifecycleOwner.lifecycleScope.launch {
+            arguments?.let {
+                val rssFeed = it.getSerializable(KEY) as RSSFeed
+                rssFeedViewModel.loadRSSFeedItems(rssFeed.rssFeedURL)
+                setupRecyclerView(rssFeed.rssFeedURL)
+            }
         }
 
         return rssFeedItemsFeedsBinding.root
     }
 
-    private fun requestCall(url: String) {
-        val api = RSSFeedApi.create()
-        val call = api.getRSS(url)
-
-        rssFeedItemsFeedsBinding.progressBarItems.visibility = View.VISIBLE
-
-        call.enqueue(object : Callback<RSS> {
-            override fun onResponse(call: Call<RSS>, response: Response<RSS>) {
-                response.body()?.let { setupRecyclerView(it.channel) }
-                rssFeedItemsFeedsBinding.progressBarItems.visibility = View.GONE
-            }
-
-            override fun onFailure(call: Call<RSS>, t: Throwable) {
-                Log.e("TAG", "Failure" + t.message)
-                rssFeedItemsFeedsBinding.progressBarItems.visibility = View.GONE
-            }
-        })
-    }
-
-    private fun setupRecyclerView(channel: Channel) {
+    private suspend fun setupRecyclerView(url: String) {
         rssFeedItemsFeedsBinding.itemsRecyclerView.layoutManager = LinearLayoutManager(
             context,
             LinearLayoutManager.VERTICAL,
@@ -88,7 +67,7 @@ class RSSFeedItemsFragment : Fragment() {
         )
         rssFeedItemsFeedsBinding.itemsRecyclerView.adapter =
             RSSFeedItemAdapter(
-                rssFeedViewModel.loadRSSFeedItems(channel),
+                rssFeedViewModel.loadRSSFeedItems(url),
                 rssFeedItemClickedListener
             )
     }
