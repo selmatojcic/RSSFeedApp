@@ -61,13 +61,6 @@ class RSSFeedsFragment : Fragment() {
         rssFeedViewModel.getRSSFeeds()
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is OnRSSFeedClickedListener) {
-            onRSSFeedClickedListener = context
-        }
-    }
-
     private fun setupRecyclerView() {
         fragmentRssFeedsBinding.apply {
             feedsRecyclerView.layoutManager = LinearLayoutManager(
@@ -77,6 +70,13 @@ class RSSFeedsFragment : Fragment() {
             )
             rssFeedAdapter.setHasStableIds(true)
             feedsRecyclerView.adapter = rssFeedAdapter
+        }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is OnRSSFeedClickedListener) {
+            onRSSFeedClickedListener = context
         }
     }
 }
