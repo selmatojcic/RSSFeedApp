@@ -12,9 +12,6 @@ interface RSSFeedDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertRSSFeed(rssFeed: RSSFeed)
 
-    @Query("DELETE FROM rssFeeds")
-    fun deleteAll()
-
     @Delete
     suspend fun deleteRSSFeed(rssFeed: RSSFeed)
 }

@@ -19,7 +19,6 @@ interface RSSFeedApi {
                 .addConverterFactory(SimpleXmlConverterFactory.create())
                 .build()
             return retrofit.create(RSSFeedApi::class.java)
-
         }
     }
 }

@@ -23,7 +23,6 @@ object RSSFeedDatabaseBuilder {
             RSSFeedDatabase.NAME
         )
             .fallbackToDestructiveMigration()
-            .allowMainThreadQueries()
             .build()
     }
 }

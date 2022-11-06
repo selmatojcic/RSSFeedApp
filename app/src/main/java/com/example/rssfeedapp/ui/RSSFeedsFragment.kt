@@ -30,7 +30,7 @@ class RSSFeedsFragment : Fragment() {
     private lateinit var rssFeedAdapter: RSSFeedAdapter
 
     companion object {
-        const val TAG = "RSS FEEDS"
+        const val TAG = "RSSFeedsFragment"
         fun create(): RSSFeedsFragment {
             return RSSFeedsFragment()
         }
@@ -125,6 +125,4 @@ class RSSFeedsFragment : Fragment() {
         val rssFeed = RSSFeed(0, title, description, image.url, rssFeedURL)
         rssFeedViewModel.insertRSSFeed(rssFeed)
     }
-
-
 }

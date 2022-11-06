@@ -25,10 +25,6 @@ class RSSFeedViewModel(androidApplication: Application) : AndroidViewModel(andro
         return rssFeedRepository.getRSSFeeds()
     }
 
-    fun deleteAllRSSFeeds() {
-        return rssFeedRepository.deleteAllRSSFeeds()
-    }
-
     fun loadRSSFeedItems(channel: Channel): List<Item> {
         val itemList: MutableList<Item> = mutableListOf()
         for (item in channel.items) {

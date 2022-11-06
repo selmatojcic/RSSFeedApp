@@ -22,6 +22,4 @@ class RSSFeedRepository(private val rssFeedDao: RSSFeedDao) {
             rssFeedDao.deleteRSSFeed(rssFeed)
         }
     }
-
-    fun deleteAllRSSFeeds() = rssFeedDao.deleteAll()
 }
