@@ -4,7 +4,6 @@ import androidx.room.Room
 import com.example.rssfeedapp.RSSFeedApp
 
 object RSSFeedDatabaseBuilder {
-
     private var instance: RSSFeedDatabase? = null
 
     fun getInstance(): RSSFeedDatabase {

@@ -10,7 +10,6 @@ import com.example.rssfeedapp.model.Item
 class RSSFeedItemAdapter(
     items: List<Item>, private val onRSSFeedItemClickedListener: OnRSSFeedItemClickedListener
 ) : RecyclerView.Adapter<RSSFeedItemViewHolder>() {
-
     private val items: MutableList<Item> = mutableListOf()
 
     init {

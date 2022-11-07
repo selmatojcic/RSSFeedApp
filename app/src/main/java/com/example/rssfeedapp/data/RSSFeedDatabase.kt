@@ -6,7 +6,6 @@ import com.example.rssfeedapp.model.RSSFeed
 
 @Database(entities = [RSSFeed::class], version = 2)
 abstract class RSSFeedDatabase : RoomDatabase() {
-
     abstract fun rssFeedDao(): RSSFeedDao
 
     companion object {
