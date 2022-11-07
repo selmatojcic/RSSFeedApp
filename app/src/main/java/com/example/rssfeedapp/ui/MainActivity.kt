@@ -10,9 +10,12 @@ import com.example.rssfeedapp.listeners.OnRSSFeedClickedListener
 import com.example.rssfeedapp.listeners.OnRSSFeedItemClickedListener
 import com.example.rssfeedapp.model.Item
 import com.example.rssfeedapp.model.RSSFeed
+import com.example.rssfeedapp.viewmodel.RSSFeedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity(), OnRSSFeedClickedListener, OnRSSFeedItemClickedListener {
     private lateinit var mainBinding: ActivityMainBinding
+    private val rssFeedViewModel by viewModel<RSSFeedViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,5 +48,9 @@ class MainActivity : AppCompatActivity(), OnRSSFeedClickedListener, OnRSSFeedIte
     override fun onRSSFeedItemClicked(item: Item) {
         val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(item.link))
         startActivity(browserIntent)
+    }
+
+    override fun deleteRSSFeed(rssFeed: RSSFeed) {
+        rssFeedViewModel.deleteRSSFeed(rssFeed)
     }
 }

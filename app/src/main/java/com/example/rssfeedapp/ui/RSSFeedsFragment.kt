@@ -38,8 +38,7 @@ class RSSFeedsFragment : Fragment() {
             false
         )
 
-        rssFeedAdapter =
-            context?.let { RSSFeedAdapter(onRSSFeedClickedListener, it, rssFeedViewModel) }!!
+        rssFeedAdapter = RSSFeedAdapter(onRSSFeedClickedListener)
 
         fragmentRssFeedsBinding.addLinkButton.setOnClickListener {
             rssFeedViewModel
